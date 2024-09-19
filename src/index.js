@@ -57,7 +57,7 @@ canvas_1.GlobalFonts.registerFromPath((0, node_path_1.join)('.', 'node_modules',
 canvas_1.GlobalFonts.registerFromPath((0, node_path_1.join)('.', 'node_modules', 'roulette-image', 'fonts', 'Symbola.ttf'), 'Symbola');
 canvas_1.GlobalFonts.registerFromPath((0, node_path_1.join)('.', 'node_modules', 'roulette-image', 'fonts', 'NotoEmoji.ttf'), 'NotoEmoji');
 canvas_1.GlobalFonts.registerFromPath((0, node_path_1.join)('.', 'node_modules', 'roulette-image', 'fonts', 'NotoRegular.ttf'), 'NotoRegular');
-function createRouletteGifImage(sectors, return_stream) {
+function createRouletteGifImage(sectors, centred_image, return_stream) {
     if (return_stream === void 0) { return_stream = false; }
     return __awaiter(this, void 0, void 0, function () {
         var main, gif_image, one_image, frames, one_ctx, roulette_images, _i, roulette_images_1, image_ctx, delay, _a;
@@ -71,7 +71,7 @@ function createRouletteGifImage(sectors, return_stream) {
                     return [4 /*yield*/, createRouletteImage(main, false, false)];
                 case 2:
                     one_image = _b.sent();
-                    return [4 /*yield*/, getRotateRouletteImage(one_image, "https://i.pinimg.com/564x/03/a9/5b/03a95b4163bac8525809f191a206e729.jpg")];
+                    return [4 /*yield*/, getRotateRouletteImage(one_image, centred_image ? centred_image : "https://i.pinimg.com/564x/03/a9/5b/03a95b4163bac8525809f191a206e729.jpg")];
                 case 3:
                     frames = _b.sent();
                     return [4 /*yield*/, createRouletteImage(main, true)];
@@ -83,9 +83,9 @@ function createRouletteGifImage(sectors, return_stream) {
                 case 5:
                     if (!(_i < roulette_images_1.length)) return [3 /*break*/, 9];
                     image_ctx = roulette_images_1[_i];
-                    delay = roulette_images.indexOf(image_ctx) >= 14 ? 150 : roulette_images.indexOf(image_ctx) >= 11 ? 120 :
+                    delay = roulette_images.indexOf(image_ctx) >= 14 ? 300 : roulette_images.indexOf(image_ctx) >= 11 ? 120 :
                         roulette_images.indexOf(image_ctx) >= 7 ? 100 : 75;
-                    return [4 /*yield*/, gif_image.encoder.setDelay(25)];
+                    return [4 /*yield*/, gif_image.encoder.setDelay(20)];
                 case 6:
                     _b.sent();
                     return [4 /*yield*/, gif_image.encoder.addFrame(image_ctx)];
@@ -115,7 +115,7 @@ function createRouletteGifImage(sectors, return_stream) {
 }
 exports.createRouletteGifImage = createRouletteGifImage;
 function createGifImage(delay) {
-    if (delay === void 0) { delay = 120; }
+    if (delay === void 0) { delay = 320; }
     return __awaiter(this, void 0, void 0, function () {
         var encoder, stream;
         return __generator(this, function (_a) {
@@ -147,9 +147,9 @@ function getRotateRouletteImage(image_buffer, specific_win_avatar) {
                                 canvasHeight = 500;
                                 centerX = canvasWidth / 2;
                                 centerY = canvasHeight / 2;
-                                angleIncrement = (2 * Math.PI) / 15;
+                                angleIncrement = (2 * Math.PI) / 30;
                                 frames = [];
-                                for (i = 0; i < 15; i++) {
+                                for (i = 0; i < 30; i++) {
                                     canvas = (0, canvas_1.createCanvas)(canvasWidth, canvasHeight);
                                     ctx = canvas.getContext('2d');
                                     ctx.save();
@@ -292,9 +292,9 @@ function createRouletteImage(sectors, return_ctx, pointer, specific_win_avatar) 
                                         ctx.rotate(startAngle + sectorAngle / 2);
                                         text = "".concat(sector.number + 1, "- ").concat(sector.username).trim();
                                         ctx.textAlign = "left";
-                                        ctx.fillStyle = "#1a150e";
-                                        ctx.font = "bold " + Math.round(24 - sectors.length * 0.25) + "px Tajawal,Symbola,Symbola_hint,DejaVuSans,NotoRegular,NotoEmoji,Arial";
-                                        ctx.fillText(text.length >= 14 ? text.slice(0, 12) + ".." : text.slice(0, 16), 86, 4);
+                                        ctx.fillStyle = "#fff";
+                                        ctx.font = "bold " + (Math.round(24 - sectors.length * 0.25) - 5) + "px Tajawal,Symbola,Symbola_hint,DejaVuSans,NotoRegular,NotoEmoji,Arial";
+                                        ctx.fillText(text.length >= 16 ? text.slice(0, 20) + ".." : text.slice(0, 16), 86, 4);
                                         ctx.restore();
                                         angle = i * sectorAngle;
                                         x = Math.cos(angle) * 244 + 250;
@@ -303,7 +303,7 @@ function createRouletteImage(sectors, return_ctx, pointer, specific_win_avatar) 
                                         ctx.moveTo(250, 250);
                                         ctx.lineTo(x, y);
                                         ctx.lineWidth = 3;
-                                        ctx.strokeStyle = "#1a150e";
+                                        ctx.strokeStyle = "#fff";
                                         ctx.stroke();
                                         return [2 /*return*/];
                                     });
@@ -318,7 +318,7 @@ function createRouletteImage(sectors, return_ctx, pointer, specific_win_avatar) 
                                 ctx.moveTo(499, 203);
                                 ctx.lineTo(468, 230);
                                 ctx.lineTo(499, 257);
-                                ctx.fillStyle = '#e2e2e2';
+                                ctx.fillStyle = '#fff';
                                 ctx.fill();
                                 ctx.closePath();
                                 return [4 /*yield*/, (0, canvas_1.loadImage)(specific_win_avatar ? specific_win_avatar : sectors[sectors.length - 1].avatarURL)];
